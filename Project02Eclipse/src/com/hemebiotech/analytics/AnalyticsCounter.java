@@ -3,42 +3,43 @@ package com.hemebiotech.analytics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0;	// initialize to 0
-	private static int rashCount = 0;		// initialize to 0
-	private static int pupilCount = 0;		// initialize to 0
-	
+
 	public static void main(String args[]) throws Exception {
-		// first get input
-		//Testons le code
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
 
-		int i = 0;	// set i to 0
-		int headCount = 0;	// counts headaches
-		while (line != null) {
-			i++;	// increment i
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-				System.out.println("number of headaches: " + headCount);
-			}
-			else if (line.equals("rush")) {
-				rashCount++;
-			}
-			else if (line.contains("pupils")) {
-				pupilCount++;
-			}
+	// STEP 1 : Read the file
 
-			line = reader.readLine();	// get another symptom
-		}
+		BufferedReader reader = new BufferedReader(new FileReader("symptoms.txt"));
+		// Read 1rst line (initialize reader)
+		String textOnLine = reader.readLine();
 		
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
+	//STEP 2 : Create Map occurrence
+		Map<String,Integer> mapCounter = new TreeMap<String,Integer>();
+		while (textOnLine != null) {
+			//case 1 : i never seen this symptom
+			if (mapCounter.get(textOnLine) == null) {
+				mapCounter.put(textOnLine, 1);
+				System.out.println("NEW: "+textOnLine+"(1)");
+			}
+			//case 2: symptom ever exist in map
+			else {
+				mapCounter.put(textOnLine, mapCounter.get(textOnLine)+1);
+				System.out.println("Increment: "+textOnLine+" = "+mapCounter.get(textOnLine));
+			}
+			// Read next line 
+			textOnLine = reader.readLine();
+		}
+		reader.close();
+		
+		// STEP 3 : Write the map in file
+		FileWriter writer = new FileWriter("result.out");
+		for (Map.Entry mapentry : mapCounter.entrySet()) {
+			writer.write(mapentry.getKey() + " : " + mapentry.getValue()+ "\n");
+		}
 		writer.close();
+
 	}
 }
