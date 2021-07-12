@@ -11,6 +11,7 @@ public class AnalyticsCounter {
 	
 	public static void main(String args[]) throws Exception {
 		// first get input
+		//Testons le code
 		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
 		String line = reader.readLine();
 
