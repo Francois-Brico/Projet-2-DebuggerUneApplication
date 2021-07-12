@@ -1,45 +1,33 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
+/**
+ * @author F.Brico
+ */
 public class AnalyticsCounter {
-
+	
+	/**
+	 * Main Program
+	 * it takes a list of symptoms from one file and writes the number of occurrences for each of them to another.
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String args[]) throws Exception {
-
-	// STEP 1 : Read the file
-
-		BufferedReader reader = new BufferedReader(new FileReader("symptoms.txt"));
-		// Read 1rst line (initialize reader)
-		String textOnLine = reader.readLine();
 		
-	//STEP 2 : Create Map occurrence
-		Map<String,Integer> mapCounter = new TreeMap<String,Integer>();
-		while (textOnLine != null) {
-			//case 1 : i never seen this symptom
-			if (mapCounter.get(textOnLine) == null) {
-				mapCounter.put(textOnLine, 1);
-				System.out.println("NEW: "+textOnLine+"(1)");
-			}
-			//case 2: symptom ever exist in map
-			else {
-				mapCounter.put(textOnLine, mapCounter.get(textOnLine)+1);
-				System.out.println("Increment: "+textOnLine+" = "+mapCounter.get(textOnLine));
-			}
-			// Read next line 
-			textOnLine = reader.readLine();
-		}
-		reader.close();
+		//STEP1 : Read the input file by integrating it into a list
+		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
+		List<String> listSymptoms = readSymptomDataFromFile.GetSymptoms();
 		
-		// STEP 3 : Write the map in file
-		FileWriter writer = new FileWriter("result.out");
-		for (Map.Entry mapentry : mapCounter.entrySet()) {
-			writer.write(mapentry.getKey() + " : " + mapentry.getValue()+ "\n");
-		}
-		writer.close();
-
+		//STEP2: Create a map containing the occurrences of each symptom of the list
+		OccurrenceSymptomMapping occurrenceSymptomMapping = new OccurrenceSymptomMapping();
+		Map<String, Integer> mapSymptoms = occurrenceSymptomMapping.conversion(listSymptoms);
+		
+		//STEP3: Write the map to the output file
+		WriteMapInFile writeMapInFile = new WriteMapInFile();
+		writeMapInFile.writeInFile(mapSymptoms,"result.out");
 	}
 }
+
+
