@@ -18,7 +18,7 @@ public class AnalyticsCounter {
 
 		// STEP1 : Read the input file by integrating it into a list
 		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
-		List<String> listSymptoms = readSymptomDataFromFile.GetSymptoms();
+		List<String> listSymptoms = readSymptomDataFromFile.getSymptoms();
 
 		// STEP2: Create a map containing the occurrences of each symptom of the list
 		OccurrenceSymptomMapping occurrenceSymptomMapping = new OccurrenceSymptomMapping();
