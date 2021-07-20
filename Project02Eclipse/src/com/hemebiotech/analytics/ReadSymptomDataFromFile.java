@@ -11,7 +11,6 @@ import java.util.List;
  *
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
-
 	private String filepath;
 
 	/**
@@ -42,16 +41,13 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 					result.add(line);
 					line = reader.readLine();
 				}
-
 			} catch (IOException e) {
 				System.out.println("Problem encountered while reading the file");
 
 			} finally {
 				reader.close();
 			}
-
 		}
 		return result;
 	}
-
 }

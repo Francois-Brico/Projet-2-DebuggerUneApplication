@@ -17,7 +17,7 @@ public class WriteMapInFile implements ISymptomWriter {
 	 * @param mapSymptoms : Map that contains the symptoms and their respective
 	 *                    occurrence
 	 * @param fileOut     : Result destination file
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void writeInFile(Map<String, Integer> mapSymptoms, String fileOut) throws IOException {
 
