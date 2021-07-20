@@ -25,24 +25,31 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	/**
 	 * Create a list from a file
+	 * 
+	 * @throws IOException
 	 */
 	@Override
-	public List<String> GetSymptoms() {
+	public List<String> GetSymptoms() throws IOException {
 		ArrayList<String> result = new ArrayList<String>();
 
 		if (filepath != null) {
+			BufferedReader reader = null;
 			try {
-				BufferedReader reader = new BufferedReader(new FileReader(filepath));
+				reader = new BufferedReader(new FileReader(filepath));
 				String line = reader.readLine();
 
 				while (line != null) {
 					result.add(line);
 					line = reader.readLine();
 				}
-				reader.close();
+
 			} catch (IOException e) {
 				System.out.println("Problem encountered while reading the file");
+
+			} finally {
+				reader.close();
 			}
+
 		}
 		return result;
 	}
